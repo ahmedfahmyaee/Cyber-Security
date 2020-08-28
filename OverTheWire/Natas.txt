@@ -22,9 +22,9 @@ writeups
 password for the next level.
 3: We look at the html and there's a comment saying we wont find a leak and even GOOGLE WONT FIND IT hinting towards a robots.txt file , we look at it and we find a disallowed directory
 we go into the directory and we are greeted with our password.
-4: We are told by the site that we arrvied from "" and we should be arriving from a certain link. This hints towards a http Referer header which should be set to the link given to us.
+4: We are told by the site that we arrvied from "" and we should be arriving from a certain link. This hints towards an http Referer header which should be set to the link given to us.
 5: We are told we aren't authorized and that's it, we go to inspect the network in chrome dev tools nad we notice a loggedin cookie, we send a request ourselves
-with the cookie set a true and we get in
+with the cookie set to true and we get in
 6: We go to the file and we see a submit button and a source code button. we look at the source code and we see the input is matched up against the file. we go to the file and find
 the contets, we input the contets and we get our password.
 7: We go to the site and we see two buttons we click on them and we notice and LFI weakness in the site. We also notice and html comment hinting at where hte password is so we go there
