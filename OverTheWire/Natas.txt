@@ -29,7 +29,7 @@ with the cookie set to true and we get in
 the contets, we input the contets and we get our password.
 7: We go to the site and we see two buttons we click on them and we notice and LFI weakness in the site. We also notice and html comment hinting at where hte password is so we go there
 and we find the password.
-8: We have an ecryption function the text that was encrypted. We just go backwards and we get out code.
+8: We have an ecryption function detailing how the text that was encrypted. We just go backwards and we get out code.
 9: We see go to the site and we see in the php source code that the vulnerble function passthru is used. we can use exploit this int getting arbitrary code execution with this command:
 ; cat /etc/natas_webpass/natas10
 10: This time we notice there is a filter on the input for the charachters {; | &} making it impossible for us to inject another command, however
