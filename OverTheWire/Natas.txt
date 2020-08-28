@@ -1,0 +1,36 @@
+0-1 : gtVrDuiDfck831PqWsLEZy5gyDz1clto
+1-2 : ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
+2-3 : sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+3-4 : Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
+4-5 : iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq
+5-6 : aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1
+6-7 : 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9
+7-8 : DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe
+8-9 : W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+9-10 : nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
+10-11 : U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
+
+
+
+
+
+
+
+writeups
+0 and 1: Just look at the html and you'll find the password.
+2 : We can see that we have a pixel file included, if we look at the link we can see its from a files folder we go into the folder and see a users.txt file we look in it and we see the
+password for the next level.
+3: We look at the html and there's a comment saying we wont find a leak and even GOOGLE WONT FIND IT hinting towards a robots.txt file , we look at it and we find a disallowed directory
+we go into the directory and we are greeted with our password.
+4: We are told by the site that we arrvied from "" and we should be arriving from a certain link. This hints towards a http Referer header which should be set to the link given to us.
+5: We are told we aren't authorized and that's it, we go to inspect the network in chrome dev tools nad we notice a loggedin cookie, we send a request ourselves
+with the cookie set a true and we get in
+6: We go to the file and we see a submit button and a source code button. we look at the source code and we see the input is matched up against the file. we go to the file and find
+the contets, we input the contets and we get our password.
+7: We go to the site and we see two buttons we click on them and we notice and LFI weakness in the site. We also notice and html comment hinting at where hte password is so we go there
+and we find the password.
+8: We have an ecryption function the text that was encrypted. We just go backwards and we get out code.
+9: We see go to the site and we see in the php source code that the vulnerble function passthru is used. we can use exploit this int getting arbitrary code execution with this command:
+; cat /etc/natas_webpass/natas10
+10: This time we notice there is a filter on the input for the charachters {; | &} making it impossible for us to inject another command, however
+we can still abuse the code by just grepping for everything in the password file using . regex on grep
