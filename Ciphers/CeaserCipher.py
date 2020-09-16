@@ -7,8 +7,8 @@ from string import ascii_lowercase
 from string import ascii_uppercase
 
 # Creating two lists of the alphabet for both lower case and upper case
-UPPER_CASE_ALPHABET = list(ascii_uppercase)
-LOWER_CASE_ALPHABET = list(ascii_lowercase)
+UPPER_CASE_ALPHABET = ascii_uppercase
+LOWER_CASE_ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
 
 # Creating the command line argument parser
@@ -40,14 +40,15 @@ def cipher(text: str, key: int, decrypt: bool) -> str:
         # If the character is not in the english alphabet don't change it.
         if not char.isalpha():
             output += char
-        elif char.islower():
-            index = LOWER_CASE_ALPHABET.index(char)
+            continue
+
+        index = LOWER_CASE_ALPHABET.index(char.lower())
+        if char.islower():
             if decrypt:
                 output += LOWER_CASE_ALPHABET[(index - key) % ALPHABET_SIZE]
             else:
                 output += LOWER_CASE_ALPHABET[(index + key) % ALPHABET_SIZE]
         else:
-            index = UPPER_CASE_ALPHABET.index(char)
             if decrypt:
                 output += UPPER_CASE_ALPHABET[(index - key) % ALPHABET_SIZE]
             else:
