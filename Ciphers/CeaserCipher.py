@@ -4,11 +4,9 @@ This is a command line program that can be used to decrypt and encrypt a text us
 
 import argparse
 from string import ascii_lowercase
-from string import ascii_uppercase
 
 # Creating two strings of the alphabet for both lower case and upper case
-UPPER_CASE_ALPHABET = ascii_uppercase
-LOWER_CASE_ALPHABET = ascii_lowercase
+ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
 
 
@@ -23,24 +21,25 @@ E(x) = (x + k) mod 26
 
 def cipher(text: str, key: int, decrypt: bool) -> str:
     output = ''
+
     for char in text:
         # If the character is not in the english alphabet don't change it.
         if not char.isalpha():
             output += char
             continue
 
-        index = LOWER_CASE_ALPHABET.index(char.lower())
-        if char.islower():
-            if decrypt:
-                output += LOWER_CASE_ALPHABET[(index - key) % ALPHABET_SIZE]
-            else:
-                output += LOWER_CASE_ALPHABET[(index + key) % ALPHABET_SIZE]
+        index = ALPHABET.index(char.lower())
+
+        if decrypt:
+            char = ALPHABET[(index - key) % ALPHABET_SIZE]
         else:
-            if decrypt:
-                output += UPPER_CASE_ALPHABET[(index - key) % ALPHABET_SIZE]
-            else:
-                output += UPPER_CASE_ALPHABET[(index + key) % ALPHABET_SIZE]
-                
+            char = ALPHABET[(index + key) % ALPHABET_SIZE]
+
+        # Setting the right case for the letter
+        if not char.islower():
+            char = char.upper()
+        output += char
+
     return output
 
 
