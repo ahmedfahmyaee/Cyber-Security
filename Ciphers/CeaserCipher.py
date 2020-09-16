@@ -40,6 +40,7 @@ def cipher(text: str, key: int, decrypt: bool) -> str:
                 output += UPPER_CASE_ALPHABET[(index - key) % ALPHABET_SIZE]
             else:
                 output += UPPER_CASE_ALPHABET[(index + key) % ALPHABET_SIZE]
+                
     return output
 
 
