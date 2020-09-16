@@ -6,7 +6,7 @@ import argparse
 from string import ascii_lowercase
 from string import ascii_uppercase
 
-# Creating two lists of the alphabet for both lower case and upper case
+# Creating two strings of the alphabet for both lower case and upper case
 UPPER_CASE_ALPHABET = ascii_uppercase
 LOWER_CASE_ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
