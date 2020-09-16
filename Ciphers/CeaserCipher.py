@@ -11,19 +11,6 @@ UPPER_CASE_ALPHABET = ascii_uppercase
 LOWER_CASE_ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
 
-# Creating the command line argument parser
-parser = argparse.ArgumentParser(description='Decrypt/Encrypt Ceaser cipher. If no decrypt or encrypt flag is given the default is to encrypt')
-parser.add_argument('-k', '--key', type=int, required=True, help='Key used in the cipher')
-parser.add_argument('-t', '--text', type=str, required=True, help='The text to be encrypted/decrypted')
-
-# Creating flags
-group = parser.add_mutually_exclusive_group()
-group.add_argument('-d', '--decrypt', action='store_true', help='Decrypt the text given')
-group.add_argument('-e', '--encrypt', action='store_true', help='Encrypt the text given')
-
-# Parsing the arguments
-args = parser.parse_args()
-
 
 """
 Using the schema A-> 0, B-> 1, C-> 2 ... Z -> 25
@@ -56,7 +43,30 @@ def cipher(text: str, key: int, decrypt: bool) -> str:
     return output
 
 
+"""
+Parses the command line arguments passed to the program
+"""
+
+
+def parse():
+    # Creating the command line argument parser
+    parser = argparse.ArgumentParser(description='Decrypt/Encrypt Ceaser cipher. If no decrypt or encrypt flag is given the default is to encrypt')
+    parser.add_argument('-k', '--key', type=int, required=True, help='Key used in the cipher')
+    parser.add_argument('-t', '--text', type=str, required=True, help='The text to be encrypted/decrypted')
+
+    # Creating flags
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-d', '--decrypt', action='store_true', help='Decrypt the text given')
+    group.add_argument('-e', '--encrypt', action='store_true', help='Encrypt the text given')
+
+    # Returning the parsed arguments
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
+    # Getting the command line arguments
+    args = parse()
+
     print()
     print(cipher(args.text, args.key, args.decrypt))
 
