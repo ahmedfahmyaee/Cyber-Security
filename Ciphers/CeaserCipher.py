@@ -5,7 +5,7 @@ This is a command line program that can be used to decrypt and encrypt a text us
 import argparse
 from string import ascii_lowercase
 
-# Creating two strings of the alphabet for both lower case and upper case
+
 ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
 
