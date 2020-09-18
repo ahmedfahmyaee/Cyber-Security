@@ -44,7 +44,6 @@ def cipher(text: str, key: int, decrypt: bool) -> str:
 
 
 """
-
 Creates a parser and parses the command line arguments passed to the program
 """
 
