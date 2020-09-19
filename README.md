@@ -1,2 +1,2 @@
-# CTF
-These are CTF writeups I have written.
+# Cyber-Security
+Anything related to Cyber Security I have written.
