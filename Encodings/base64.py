@@ -57,3 +57,5 @@ def decode(text: str) -> bytes:
         output = output[:-padding_number * 2]
     return int(output, 2).to_bytes(len(output) // 8, byteorder='big')   # Convert bit string to bytes object
 
+
+
