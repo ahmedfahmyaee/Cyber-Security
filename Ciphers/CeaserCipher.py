@@ -133,3 +133,6 @@ if __name__ == '__main__':
         if args.key is None:
             configured_parser.error('Specifying a key (-k) is required when not using brute force options (-b)')
         print(cipher(args.text, args.key, args.decrypt))
+
+        
+        
