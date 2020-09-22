@@ -71,10 +71,10 @@ This is used to approximate how close a sentence is to english using frequency a
 """
 
 
-def fitting_quotient(text: bytes) -> float:
+def fitting_quotient(text: str) -> float:
     counter = Counter(text)
-    dist_text = [(counter.get(ord(ch), 0) * 100) / len(text) for ch in LETTER_OCCURRENCE]
-    return sum([abs(a - b) for a, b in zip(list(LETTER_OCCURRENCE.values()), dist_text)]) / ENGLISH_ALPHABET_SIZE
+    dist_text = [counter.get(ch, 0) * 100 / len(text) for ch in LETTER_OCCURRENCE]
+    return sum([abs(a-b) for a, b in zip(list(LETTER_OCCURRENCE.values()), dist_text)]) / ENGLISH_ALPHABET_SIZE
 
 
 """
@@ -90,12 +90,12 @@ def brute_force_decipher(text: str) -> Tuple[str, int]:
     original_text = ''
     encryption_key = 0
 
-    for i, output in enumerate(outputs):
-        frequency = fitting_quotient(bytes(output.encode()))
+    for key, output in enumerate(outputs):
+        frequency = fitting_quotient(output)
 
         if frequency < minimum_frequency:
             minimum_frequency, original_text = frequency, output
-            encryption_key = i
+            encryption_key = key
 
     return original_text, encryption_key
 
@@ -105,17 +105,18 @@ Creates a parser and parses the command line arguments passed to the program
 """
 
 
-def parse():
+def parse() -> argparse.ArgumentParser:
     # Creating the command line argument parser
-    parser = argparse.ArgumentParser(description='Decrypt/Encrypt Ceaser cipher. If no decrypt or encrypt flag is given the default is to encrypt')
+    parser = argparse.ArgumentParser(description='Decrypt/Encrypt Ceaser cipher. If no decrypt or encrypt flag is given the default is to encrypt (In case the brute force option is chose there\'s no need to specify any other flag)')
     parser.add_argument('text', type=str, help='The text to be encrypted/decrypted')
     parser.add_argument('-k', '--key', type=int, required=False, help='Key used in the cipher')
+    parser.add_argument('-b', '--bruteforce', action='store_true', help='Brute force all options and output guess using frequency analysis')
+    parser.add_argument('-l', '--bruteforcelist', action='store_true', help='Output all brute forced options in addition to the guess (Can only be used with the -b flag)')
 
     # Creating flags
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-d', '--decrypt', action='store_true', help='Decrypt the text given')
     group.add_argument('-e', '--encrypt', action='store_true', help='Encrypt the text given')
-    parser.add_argument('-b', '--bruteforce', action='store_true', help='Brute force all options and output guess using frequency analysis')
 
     # Returning the parsed arguments
     return parser
@@ -127,12 +128,17 @@ if __name__ == '__main__':
     args = configured_parser.parse_args()
 
     if args.bruteforce:
-        text, key = brute_force_decipher(args.text)
-        print(f'Text: {text}\nKey: {key}')
+        if args.bruteforcelist:
+            shifts = create_brute_force_array(args.text)
+            for i, shift in enumerate(shifts):
+                print(f'Key:{i}, Text: {shift}')
+        print('\nGuess:')
+        guessed_text, guessed_key = brute_force_decipher(args.text)
+        print(f'Text: {guessed_text}\nKey: {guessed_key}')
     else:
         if args.key is None:
             configured_parser.error('Specifying a key (-k) is required when not using brute force options (-b)')
+        if args.bruteforcelist:
+            configured_parser.error('Cannot use (-l) option when not using (-b) option')
         print(cipher(args.text, args.key, args.decrypt))
 
-        
-        
