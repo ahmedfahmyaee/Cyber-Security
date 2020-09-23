@@ -52,7 +52,8 @@ def decode(text: str) -> bytes:
         else:
             padding_number += 1
 
-    if padding_number != 0:     # Remove the added bits do to padding if exists
+    if padding_number != 0:     # Remove the added bits due to padding if exists
         output = output[:-padding_number * 2]
     return int(output, 2).to_bytes(len(output) // 8, byteorder='big')   # Convert bit string to bytes object
+
 
