@@ -142,3 +142,6 @@ if __name__ == '__main__':
             configured_parser.error('Cannot use (-l) option when not using (-b) option')
         print(cipher(args.text, args.key, args.decrypt))
 
+
+        
+        
