@@ -11,7 +11,6 @@ from typing import Tuple, List
 
 ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
-ENGLISH_ALPHABET_SIZE = 26
 LETTER_OCCURRENCE = {
     'a': 8.2389258,    'b': 1.5051398,    'c': 2.8065007,    'd': 4.2904556,
     'e': 12.813865,    'f': 2.2476217,    'g': 2.0327458,    'h': 6.1476691,
@@ -62,7 +61,7 @@ Creating an array which contains all possible deciphering shifts
 
 
 def create_brute_force_array(text: str) -> List[str]:
-    return [cipher(text, i, True) for i in range(ENGLISH_ALPHABET_SIZE)]
+    return [cipher(text, i, True) for i in range(ALPHABET_SIZE)]
 
 
 """
@@ -74,7 +73,7 @@ This is used to approximate how close a sentence is to english using frequency a
 def fitting_quotient(text: str) -> float:
     counter = Counter(text)
     dist_text = [counter.get(ch, 0) * 100 / len(text) for ch in LETTER_OCCURRENCE]
-    return sum([abs(a-b) for a, b in zip(list(LETTER_OCCURRENCE.values()), dist_text)]) / ENGLISH_ALPHABET_SIZE
+    return sum([abs(a-b) for a, b in zip(list(LETTER_OCCURRENCE.values()), dist_text)]) / ALPHABET_SIZE
 
 
 """
@@ -142,6 +141,3 @@ if __name__ == '__main__':
             configured_parser.error('Cannot use (-l) option when not using (-b) option')
         print(cipher(args.text, args.key, args.decrypt))
 
-
-        
-        
