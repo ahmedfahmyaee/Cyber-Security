@@ -3,12 +3,13 @@ from string import ascii_uppercase
 
 ENCODING = ascii_uppercase + ascii_lowercase + '0123456789' + '+/'
 
-"""
-Returns binary string representation of a bytes object
-"""
-
 
 def bit_string(text: bytes) -> str:
+    """
+    Returns binary string representation of a bytes object
+    :param text:
+    :return: binary string
+    """
     output = ''
     for byte in text:
         temp = str(bin(byte))[2:]
@@ -16,12 +17,12 @@ def bit_string(text: bytes) -> str:
     return output
 
 
-"""
-Encodes a text into base64
-"""
-
-
 def encode(text: bytes) -> str:
+    """
+    Encodes a text into base64
+    :param text: text to be encoded
+    :return: base64 encoded text
+    """
     output = ''
     sequence = bit_string(text)     # Bit representation of the text
 
@@ -36,12 +37,12 @@ def encode(text: bytes) -> str:
     return output + padding
 
 
-"""
-Decodes a base64 string into bytes
-"""
-
-
 def decode(text: str) -> bytes:
+    """
+    Decodes a base64 string into bytes
+    :param text: text to be decoded
+    :return: bytes object representing decoded text
+    """
     output = ''
     padding_number = 0
 
@@ -55,5 +56,3 @@ def decode(text: str) -> bytes:
     if padding_number != 0:     # Remove the added bits due to padding if exists
         output = output[:-padding_number * 2]
     return int(output, 2).to_bytes(len(output) // 8, byteorder='big')   # Convert bit string to bytes object
-
-
