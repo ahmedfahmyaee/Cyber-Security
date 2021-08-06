@@ -86,7 +86,8 @@ def configure_parser() -> argparse.ArgumentParser:
 
 
 if __name__ == '__main__':
-    args = configure_parser().parse_args()
+    configured_parser = configure_parser()
+    args = configured_parser.parse_args()
 
     if args.decrypt:
         print(decipher(args.text))
