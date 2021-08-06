@@ -70,7 +70,7 @@ def cipher(regular_text: str, hidden_text: str) -> str:
     return regular_text
 
 
-def parse() -> argparse.ArgumentParser:
+def configure_parser() -> argparse.ArgumentParser:
     # Creating the command line argument parser
     parser = argparse.ArgumentParser(description='This is a program for hiding and extracting hidden messages using unicode steganography (more detailed info in the source code)')
     parser.add_argument('text', type=str, help='The text to be encrypted/decrypted')
@@ -86,8 +86,7 @@ def parse() -> argparse.ArgumentParser:
 
 
 if __name__ == '__main__':
-    configured_parser = parse()
-    args = configured_parser.parse_args()
+    args = configure_parser().parse_args()
 
     if args.decrypt:
         print(decipher(args.text))
