@@ -99,7 +99,7 @@ def main() -> None:
             # Turning off PASV mode so we can use commands like dir()
             client.set_pasv(False)
 
-            logging.info(f'Displaying FTP banner')
+            logging.info(f'Displaying FTP banner...')
             print(client.getwelcome())
 
             # Getting the root FTP directory contents
