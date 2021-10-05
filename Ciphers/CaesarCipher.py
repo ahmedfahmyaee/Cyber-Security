@@ -107,7 +107,7 @@ def parse() -> argparse.ArgumentParser:
     parser.add_argument('-k', '--key', type=int, required=False, help='Key used in the cipher')
     parser.add_argument('-b', '--bruteforce', action='store_true',
                         help='Brute force all options and output a guess using frequency analysis')
-    parser.add_argument('-l', '--bruteforcelist', action='store_true',
+    parser.add_argument('-l', '--brute-force-list', action='store_true',
                         help='Output all brute forced options in addition to the guess (Can only be used with the -b flag)')
 
     # Creating flags
