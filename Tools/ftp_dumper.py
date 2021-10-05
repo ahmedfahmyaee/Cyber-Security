@@ -70,6 +70,7 @@ def configure_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(levelname)s %(message)s')
     args = configure_parser().parse_args()
 
     # Checking if only one of the authentication arguments was supplied
@@ -121,6 +122,4 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(levelname)s %(message)s')
-
     main()
