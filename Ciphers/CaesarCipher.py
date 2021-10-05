@@ -118,7 +118,7 @@ def parse() -> argparse.ArgumentParser:
     return parser
 
 
-if __name__ == '__main__':
+def main() -> None:
     # Getting the command line arguments
     configured_parser = parse()
     args = configured_parser.parse_args()
@@ -137,3 +137,7 @@ if __name__ == '__main__':
         if args.bruteforcelist:
             configured_parser.error('Cannot use (-l) option when not using (-b) option')
         print(cipher(args.text, args.key, args.decrypt))
+
+
+if __name__ == '__main__':
+    main()
