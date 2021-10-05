@@ -85,7 +85,7 @@ def configure_parser() -> argparse.ArgumentParser:
     return parser
 
 
-if __name__ == '__main__':
+def main() -> None:
     configured_parser = configure_parser()
     args = configured_parser.parse_args()
 
@@ -95,3 +95,7 @@ if __name__ == '__main__':
         if not args.secret:
             configured_parser.error('Please specify a secret when encrypting')
         pyperclip.copy((cipher(args.text, args.secret)))
+
+
+if __name__ == '__main__':
+    main()
