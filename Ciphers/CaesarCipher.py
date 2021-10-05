@@ -8,19 +8,14 @@ import argparse
 
 from collections import Counter
 from string import ascii_lowercase
-from typing import Tuple, List
+from typing import Tuple
 
 ALPHABET = ascii_lowercase
 ALPHABET_SIZE = 26
-LETTER_OCCURRENCE = {
-    'a': 8.2389258,    'b': 1.5051398,    'c': 2.8065007,    'd': 4.2904556,
-    'e': 12.813865,    'f': 2.2476217,    'g': 2.0327458,    'h': 6.1476691,
-    'i': 6.1476691,    'j': 0.1543474,    'k': 0.7787989,    'l': 4.0604477,
-    'm': 2.4271893,    'n': 6.8084376,    'o': 7.5731132,    'p': 1.9459884,
-    'q': 0.0958366,    'r': 6.0397268,    's': 6.3827211,    't': 9.1357551,
-    'u': 2.7822893,    'v': 0.9866131,    'w': 2.3807842,    'x': 0.1513210,
-    'y': 1.9913847,    'z': 0.0746517
-}
+LETTER_OCCURRENCE = {'e': 12.7, 't': 9.06, 'a': 8.17, 'o': 7.51, 'i': 6.97, 'n': 6.75, 's': 6.33, 'h': 6.09,
+                     'r': 5.99, 'd': 4.25, 'l': 4.03, 'c': 2.78, 'u': 2.76, 'm': 2.41, 'w': 2.36, 'f': 2.23,
+                     'g': 2.02, 'y': 1.97, 'p': 1.93, 'b': 1.29, 'v': 0.98, 'k': 0.77, 'j': 0.15, 'x': 0.15,
+                     'q': 0.10, 'z': 0.07}
 
 
 def cipher(text: str, key: int, decrypt: bool) -> str:
@@ -39,11 +34,11 @@ def cipher(text: str, key: int, decrypt: bool) -> str:
 
     for char in text:
         # If the character is not in the english alphabet don't change it.
-        if not char.isalpha():
+        if char not in ALPHABET:
             output += char
             continue
 
-        index = ALPHABET.index(char.lower())
+        index = ord(char.lower()) - ord('a')
 
         if decrypt:
             new_char = ALPHABET[(index - key) % ALPHABET_SIZE]
@@ -56,7 +51,7 @@ def cipher(text: str, key: int, decrypt: bool) -> str:
     return output
 
 
-def create_brute_force_array(text: str) -> List[str]:
+def create_brute_force_array(text: str) -> list[str]:
     """
     Creating an array which contains all possible deciphering shifts
     :param text: text to be shifted
@@ -74,7 +69,7 @@ def fitting_quotient(text: str) -> float:
     """
     counter = Counter(text)
     dist_text = [counter.get(ch, 0) * 100 / len(text) for ch in LETTER_OCCURRENCE]
-    return sum([abs(a-b) for a, b in zip(list(LETTER_OCCURRENCE.values()), dist_text)]) / ALPHABET_SIZE
+    return sum([abs(a - b) for a, b in zip(list(LETTER_OCCURRENCE.values()), dist_text)]) / ALPHABET_SIZE
 
 
 def brute_force_decipher(text: str) -> Tuple[str, int]:
@@ -106,11 +101,14 @@ def parse() -> argparse.ArgumentParser:
     :return: configured ArgumentParser object
     """
     # Creating the command line argument parser
-    parser = argparse.ArgumentParser(description='Decrypt/Encrypt Caesar cipher. If no decrypt or encrypt flag is given the default is to encrypt (In case the brute force option is chose there\'s no need to specify any other flag)')
+    parser = argparse.ArgumentParser(
+        description='Decrypt/Encrypt Caesar cipher. If no decrypt or encrypt flag is given the default is to encrypt (In case the brute force option is chose there\'s no need to specify any other flag)')
     parser.add_argument('text', type=str, help='The text to be encrypted/decrypted')
     parser.add_argument('-k', '--key', type=int, required=False, help='Key used in the cipher')
-    parser.add_argument('-b', '--bruteforce', action='store_true', help='Brute force all options and output a guess using frequency analysis')
-    parser.add_argument('-l', '--bruteforcelist', action='store_true', help='Output all brute forced options in addition to the guess (Can only be used with the -b flag)')
+    parser.add_argument('-b', '--bruteforce', action='store_true',
+                        help='Brute force all options and output a guess using frequency analysis')
+    parser.add_argument('-l', '--bruteforcelist', action='store_true',
+                        help='Output all brute forced options in addition to the guess (Can only be used with the -b flag)')
 
     # Creating flags
     group = parser.add_mutually_exclusive_group()
